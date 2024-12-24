@@ -64,4 +64,32 @@ export class TodolistService {
       response.end();
     });
   }
+
+  /**
+   * Handles the HTTP request and response to update to-do item to the to-do list.
+   *
+   * This method listens for incoming data on the request, parses the data as JSON,
+   * and the give once condition if todolist have an ID the todo can replace with new value
+   * Finally, it sends back the updated to-do list as a JSON response.
+   *
+   * @param {http.IncomingMessage} request - The incoming HTTP request containing the update to-do item.
+   * @param {http.ServerResponse} response - The HTTP response to be sent back to the client.
+   */
+  updateTodo(request, response) {
+    // Listen for data event on the request to receive the body of the request
+    request.addListener("data", (data) => {
+      const body = JSON.parse(data.toString());
+      if (this.todolist[body.id]) {
+        // if there is an ID replace the value with body.todo
+        this.todolist[body.id] = body.todo;
+      }
+
+      // set header with application/json
+      response.setHeader("Content-Type", "application/json");
+
+      // return the json string data updated
+      response.write(this.getJsonTodolist());
+      response.end();
+    });
+  }
 }
