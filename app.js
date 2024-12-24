@@ -2,6 +2,7 @@ import http from "node:http";
 
 const server = http.createServer((request, response) => {
   response.write("Todolist API");
+  response.end();
 });
 
 server.listen(3000, "localhost", () => {
