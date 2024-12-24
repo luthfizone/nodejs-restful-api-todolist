@@ -153,8 +153,8 @@ components:
       description: Sample example of Response
       summary: Sample example of Response
       value:
-        code: 123
-        status: "Finish"
+        code: 200
+        status: "OK"
         data:
           - id: 1
-            todo: Belajar NodeJS
+            todo: Learn JavaScript
