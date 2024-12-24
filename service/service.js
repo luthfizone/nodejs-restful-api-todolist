@@ -92,4 +92,33 @@ export class TodolistService {
       response.end();
     });
   }
+
+  /**
+   * Delete a todo item from the todolist.
+   *
+   * This method listens for incoming data on the request, parses the data to extract
+   * the ID of the todo item to be deleted, and removes the item from the todolist if it exists.
+   *
+   * @param {http.IncomingMessage} request - The incoming HTTP request containing the delete to-do item.
+   * @param {http.ServerResponse} response - The HTTP response to be sent back to the client.
+   */
+  deleteTodo(request, response) {
+    // Listen for data event on the request to receive the body of the request
+    request.addListener("data", (data) => {
+      // Parse the incoming data to JSON
+      const body = JSON.parse(data.toString());
+
+      // Check if the todo item with the specified ID exists
+      if (this.todolist[body.id]) {
+        // Remove the todo item from the todolist
+        this.todolist.splice(body.id, 1);
+      }
+
+      // Set the response header to indicate JSON content
+      response.setHeader("Content-Type", "application/json");
+      // return the json string data delete
+      response.write(this.getJsonTodolist());
+      response.end();
+    });
+  }
 }
