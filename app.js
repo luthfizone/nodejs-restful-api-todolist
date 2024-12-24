@@ -1,8 +1,5 @@
 import http from "node:http";
-import { TodolistService } from "./service/service.js";
-
-// Create an instance of TodolistService
-const service = new TodolistService();
+import service from "./instance/service.js";
 
 /**
  * Create an HTTP server that listens for operation API documentation
