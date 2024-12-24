@@ -1,0 +1,160 @@
+openapi: "3.0.3"
+info:
+  title: NodeJS Todolist RESTful API
+  version: "1.0"
+  description: NodeJS vanila todolist RESTful API
+  contact:
+    name: Muhammad Luthfi
+    email: luthfizonedev@gmail.com
+servers:
+  - url: http://localhost:3000
+    description: RESTful API Server
+paths:
+  /:
+    get:
+      description: Get all data of todolist.
+      responses:
+        "200":
+          description: Get all todolist.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
+
+              examples:
+                example1:
+                  $ref: "#/components/examples/Response"
+
+    post:
+      description: Create new todolist item.
+      requestBody:
+        description: required to send by user for create new todolist.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                todo:
+                  type: string
+                  minLength: 1
+              required:
+                - todo
+
+            examples:
+              example1:
+                summary: Create sample todolist
+                value:
+                  todo: Learn ReactJS
+
+      responses:
+        "200":
+          description: Create net todolist.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
+
+              examples:
+                example1:
+                  $ref: "#/components/examples/Response"
+
+    put:
+      description: Update todolist item.
+      requestBody:
+        description: required to send by user for update todolist item.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: number
+                  format: int32
+                todo:
+                  type: string
+                  minLength: 1
+
+            examples:
+              example1:
+                summary: Update sample todolist
+                description: Sample example of requestBody
+                value:
+                  id: 1
+                  todo: "Learn Javascript"
+
+      responses:
+        "200":
+          description: Update todolist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
+
+              examples:
+                example1:
+                  $ref: "#/components/examples/Response"
+
+    delete:
+      requestBody:
+        description: required to send by user for delete todolist item.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: number
+                  format: int32
+
+            examples:
+              example1:
+                summary: Delete sample todolist
+                value:
+                  id: 1
+
+      responses:
+        "200":
+          description: Delete todolist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
+
+              examples:
+                example1:
+                  $ref: "#/components/examples/Response"
+
+components:
+  schemas:
+    Response:
+      type: object
+      properties:
+        code:
+          type: number
+          format: int32
+        status:
+          type: string
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: number
+                format: int32
+              todo:
+                type: string
+
+  examples:
+    Response:
+      description: Sample example of Response
+      summary: Sample example of Response
+      value:
+        code: 123
+        status: "Finish"
+        data:
+          - id: 1
+            todo: Belajar NodeJS
