@@ -36,4 +36,32 @@ export class TodolistService {
     // End the response
     response.end();
   }
+
+  /**
+   * Handles the HTTP request and response to create a new to-do item and add it to the to-do list.
+   *
+   * This method listens for incoming data on the request, parses the data as JSON,
+   * and expects the JSON to contain a `todo` property. The `todo` is then added to the
+   * internal `todolist` array. Finally, it sends back the updated to-do list as a JSON response.
+   *
+   * @param {http.IncomingMessage} request - The incoming HTTP request containing the new to-do item.
+   * @param {http.ServerResponse} response - The HTTP response to be sent back to the client.
+   */
+  createTodo(request, response) {
+    // Listen for data event on the request to receive the body of the request
+    request.addListener("data", (data) => {
+      // Parse the incoming data as JSON
+      const body = JSON.parse(data.toString());
+
+      // Add the new to-do item to the todolist
+      this.todolist.push(body.todo);
+
+      // Set the response header to indicate JSON content
+      response.setHeader("Content-Type", "application/json");
+
+      // write the updated to-do list as a JSON string to the response
+      response.write(this.getJsonTodolist());
+      response.end();
+    });
+  }
 }

@@ -13,6 +13,8 @@ const server = http.createServer((request, response) => {
   if (request.method === "GET") {
     // Use the instance service to handle the request and response
     service.getTodolist(request, response);
+  } else if (request.method === "POST") {
+    service.createTodo(request, response);
   }
 });
 
